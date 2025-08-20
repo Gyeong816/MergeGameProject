@@ -12,6 +12,7 @@ public class SlotManager : MonoBehaviour
     [Header("프리펩 & 파넬")] 
     [SerializeField] private Slot slotPrefab;
     [SerializeField] private Transform gridPanel;
+    [SerializeField] private Item itemPrefab;
     
     [Header("가장자리 아이템 티어 설정 ")]
     [SerializeField] private int highTierRows = 2;
@@ -27,6 +28,7 @@ public class SlotManager : MonoBehaviour
     {
         _slots = new Slot[rows, columns];
         CreateSlots();
+        SpawnTestItem();
     }
 
     private void CreateSlots()
@@ -61,4 +63,11 @@ public class SlotManager : MonoBehaviour
             }
         }
     } 
+    
+    private void SpawnTestItem()
+    {
+        Slot targetSlot = _slots[0, 0];
+        Item newItem = Instantiate(itemPrefab, targetSlot.transform);
+        newItem.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+    }
 }

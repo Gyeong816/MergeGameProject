@@ -308,8 +308,12 @@ MonoBehaviour:
   slotPrefab: {fileID: 3551026925425558709, guid: 816b080f1da2c7d4cba7764a238458ed,
     type: 3}
   gridPanel: {fileID: 522777751}
-  verticalEdge: 3
-  horizontalEdge: 1
+  itemPrefab: {fileID: 2501730446593099403, guid: 1ddeeb361fdc93347b02fcc56e880d6a,
+    type: 3}
+  highTierRows: 2
+  highTierColumns: 1
+  middleTierRows: 2
+  middleTierColumns: 1
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -775,7 +779,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
