@@ -5,3 +5,11 @@ public enum SlotType
     HighTier,
     None
 }
+
+public enum ItemType
+{
+    Fruit,
+    Meat,
+    Vegetable,
+    None
+}

@@ -17,6 +17,12 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: c95bd6e58baced14bb2d865c9a9d0d36
   m_SerializeEntries:
+  - m_GUID: 08038c601d1eaaa4d8a2ecd08141f569
+    m_Address: vegetable_3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Icon
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1945f22e96b64f84480273ae0d8a9533
     m_Address: fruit_6
     m_ReadOnly: 0
@@ -31,6 +37,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2674252f17035934abf7a87ea59f4e4f
     m_Address: meat_4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Icon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3c8b7fac544cb4948954c43aece4376d
+    m_Address: vegetable_4
     m_ReadOnly: 0
     m_SerializedLabels:
     - Icon
@@ -53,6 +65,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Icon
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6a80051e3e9b25549ae0cce8faa0236d
+    m_Address: vegetable_6
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Icon
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 842c5e407a8fe4442ab586d3afa31251
     m_Address: meat_3
     m_ReadOnly: 0
@@ -61,6 +79,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 98555d525d7477a4493923cc5d87ee7f
     m_Address: meat_6
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Icon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9e2932d8aa71fec41891ff9346be8d70
+    m_Address: vegetable_5
     m_ReadOnly: 0
     m_SerializedLabels:
     - Icon
@@ -77,6 +101,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Icon
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf30af8d878091e40b7232ca177fc14e
+    m_Address: vegetable_1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Icon
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c7a6cf40bf8efbb4aa5047ad0926e8b3
     m_Address: fruit_5
     m_ReadOnly: 0
@@ -85,6 +115,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e3b11afc4e347224f91a2cff8d4b4e34
     m_Address: fruit_3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Icon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ef8076b153e65584cac5586838556bd3
+    m_Address: vegetable_2
     m_ReadOnly: 0
     m_SerializedLabels:
     - Icon

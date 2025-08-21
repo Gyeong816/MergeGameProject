@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    public ItemData ItemData;
     private Canvas _canvas;
     private RectTransform _rectTransform;
     private Transform _originalParent;

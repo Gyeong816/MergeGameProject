@@ -310,7 +310,7 @@ MonoBehaviour:
   gridPanel: {fileID: 522777751}
   itemPrefab: {fileID: 2501730446593099403, guid: 1ddeeb361fdc93347b02fcc56e880d6a,
     type: 3}
-  highTierRows: 2
+  highTierRows: 1
   highTierColumns: 1
   middleTierRows: 2
   middleTierColumns: 1

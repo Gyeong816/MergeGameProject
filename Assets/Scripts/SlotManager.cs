@@ -1,7 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.UI;
 
 public class SlotManager : MonoBehaviour
 {
@@ -21,14 +25,24 @@ public class SlotManager : MonoBehaviour
     [SerializeField] private int middleTierRows = 2;
     [SerializeField] private int middleTierColumns = 1;
     
-    
     private Slot[,] _slots;
+    private List<ItemData> _allItems = new();
+    
+    private readonly Dictionary<SlotType, (int minTier, int maxTier)> _tierRanges = new()
+    {
+        { SlotType.HighTier, (5,6)},
+        { SlotType.MiddleTier, (3,4)},
+        { SlotType.LowTier, (1,2)},
+    };
 
-    private void Awake()
+    private async void Awake()
     {
         _slots = new Slot[rows, columns];
         CreateSlots();
-        SpawnTestItem();
+        
+        _allItems = await TsvLoader.LoadTableAsync<ItemData>("Items");
+
+        SpawnItems();
     }
 
     private void CreateSlots()
@@ -62,12 +76,39 @@ public class SlotManager : MonoBehaviour
                 _slots[y, x] = newSlot;
             }
         }
-    } 
-    
-    private void SpawnTestItem()
-    {
-        Slot targetSlot = _slots[0, 0];
-        Item newItem = Instantiate(itemPrefab, targetSlot.transform);
-        newItem.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
     }
+
+    private void SpawnItems()
+    {
+        foreach (var slot in _slots)
+        {
+            var range = _tierRanges[slot.slotType];
+            var candidateItems = _allItems.FindAll(i => i.Tier >= range.minTier && i.Tier <= range.maxTier);
+            if (candidateItems.Count == 0)
+            {
+                Debug.LogWarning($"{slot.slotType} 슬롯에 맞는 아이템 없음.");
+                continue;
+            }
+            
+            ItemData randomItemData = candidateItems[UnityEngine.Random.Range(0, candidateItems.Count)]; 
+            
+            Item newItem = Instantiate(itemPrefab, slot.transform);
+            newItem.ItemData = randomItemData;
+            newItem.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+
+            Addressables.LoadAssetAsync<Sprite>(randomItemData.Icon).Completed += handle =>
+            {
+                if (handle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    newItem.GetComponent<Image>().sprite = handle.Result;
+                }
+                else
+                {
+                    Debug.LogWarning($"{randomItemData.Icon}아이콘 로드 실패: ");
+                }
+            };
+
+        }
+    }
+   
 }
