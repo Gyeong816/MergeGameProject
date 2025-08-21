@@ -53,6 +53,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Icon
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 440c289530c5bdd46ad9237543602d4a
+    m_Address: fruit_7
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Icon
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 56712a157f50943418f3b2f867e244f4
     m_Address: fruit_1
     m_ReadOnly: 0
@@ -113,8 +119,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - Icon
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d6b60f1dfcc42034db671428dc5e4d16
+    m_Address: vegetable_7
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Icon
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e3b11afc4e347224f91a2cff8d4b4e34
     m_Address: fruit_3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Icon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4f0d19f3baedfd40b8394a51fa84e61
+    m_Address: meat_7
     m_ReadOnly: 0
     m_SerializedLabels:
     - Icon

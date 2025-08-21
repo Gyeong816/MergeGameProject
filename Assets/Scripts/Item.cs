@@ -7,9 +7,9 @@ using UnityEngine.EventSystems;
 public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public ItemData ItemData;
+    public Transform currentSlot;
     private Canvas _canvas;
     private RectTransform _rectTransform;
-    private Transform _originalParent;
     private CanvasGroup _canvasGroup;
 
     private void Awake()
@@ -17,11 +17,11 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         _canvas = GetComponentInParent<Canvas>();
         _rectTransform = GetComponent<RectTransform>();
         _canvasGroup = GetComponent<CanvasGroup>();
+        currentSlot = transform.parent;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        _originalParent = transform.parent;
         transform.SetParent(_canvas.transform);
         _canvasGroup.blocksRaycasts = false;
     }
@@ -39,12 +39,38 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             transform.SetParent(targetSlot.transform);
             _rectTransform.anchoredPosition = Vector2.zero; 
         }
+        else if (eventData.pointerEnter != null && eventData.pointerEnter.GetComponent<Item>())
+        {
+            Item targetItem = eventData.pointerEnter.GetComponent<Item>();
+            int maxTier = ItemManager.Instance.GetMaxTierNum(targetItem.ItemData.ItemType);
+            
+            if (targetItem.ItemData.Id == ItemData.Id && targetItem.ItemData.Tier < maxTier)
+            {
+                Transform parentSlot = targetItem.currentSlot;
+                var nextItemData = ItemManager.Instance.TryMerge(ItemData);
+                ItemManager.Instance.CreateItem(nextItemData, parentSlot); 
+                
+                targetItem.gameObject.SetActive(false);
+                gameObject.SetActive(false);
+                Destroy(targetItem.gameObject);
+                Destroy(gameObject);
+            }
+            else
+            { 
+                transform.SetParent(targetItem.currentSlot);
+                ItemManager.Instance.SwapItems(currentSlot, targetItem);
+                currentSlot = transform.parent;
+               _rectTransform.anchoredPosition = Vector2.zero;
+            }
+            
+        }
         else
         {
-            transform.SetParent(_originalParent);
+            transform.SetParent(currentSlot);
             _rectTransform.anchoredPosition = Vector2.zero;
         }
         
         _canvasGroup.blocksRaycasts = true;
     }
+    
 }
