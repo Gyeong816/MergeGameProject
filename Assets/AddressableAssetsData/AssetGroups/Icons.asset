@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Icons
+  m_EditorClassIdentifier: 
+  m_GroupName: Icons
+  m_Data:
+    m_SerializedData: []
+  m_GUID: c95bd6e58baced14bb2d865c9a9d0d36
+  m_SerializeEntries:
+  - m_GUID: 1945f22e96b64f84480273ae0d8a9533
+    m_Address: fruit_6
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Icon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 22656ab870737cd468b402ac419f7404
+    m_Address: meat_1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Icon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2674252f17035934abf7a87ea59f4e4f
+    m_Address: meat_4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Icon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 40de832b5c75d5a43a62bd42c056046e
+    m_Address: fruit_2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Icon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 56712a157f50943418f3b2f867e244f4
+    m_Address: fruit_1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Icon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 58f0ad75ee58f094b94acd464442e74e
+    m_Address: fruit_4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Icon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 842c5e407a8fe4442ab586d3afa31251
+    m_Address: meat_3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Icon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 98555d525d7477a4493923cc5d87ee7f
+    m_Address: meat_6
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Icon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b57ca3a58d86461488c0776eb179d3a7
+    m_Address: meat_5
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Icon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: beee38b4e8af5f245ad1d48e5a1f7047
+    m_Address: meat_2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Icon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c7a6cf40bf8efbb4aa5047ad0926e8b3
+    m_Address: fruit_5
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Icon
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e3b11afc4e347224f91a2cff8d4b4e34
+    m_Address: fruit_3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Icon
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 637082137bfb5d14fb8ed3aa16b00a16, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 2d1825d13c4561e4cba5867c95cce101, type: 2}
+    - {fileID: 11400000, guid: 45e07a945d5808e409c3a2a571028f93, type: 2}
