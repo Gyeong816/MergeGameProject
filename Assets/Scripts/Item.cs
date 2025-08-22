@@ -9,6 +9,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 {
     public ItemData ItemData;
     public ItemState State => _state;
+    public Transform currentSlot;
     
     [SerializeField] private Image hiddenImage;
     [SerializeField] private Image disabledImage; 
@@ -17,14 +18,13 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     private RectTransform _rectTransform;
     private CanvasGroup _canvasGroup;
     private ItemState _state = ItemState.Active; 
-    private Transform _currentSlot;
     
     private void Awake()
     {
         _canvas = GetComponentInParent<Canvas>();
         _rectTransform = GetComponent<RectTransform>();
         _canvasGroup = GetComponent<CanvasGroup>();
-        _currentSlot = transform.parent;
+        currentSlot = transform.parent;
     }
     
     public void SetItemState(ItemState state)
@@ -53,7 +53,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public void SetSlot(Transform targetSlot)
     {
         transform.SetParent(targetSlot);
-        _currentSlot = targetSlot;
+        currentSlot = targetSlot;
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -88,7 +88,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             
             if (targetItem.ItemData.Id == ItemData.Id && targetItem.ItemData.Tier < maxTier)
             {
-                Transform parentSlot = targetItem._currentSlot;
+                Transform parentSlot = targetItem.currentSlot;
                 Slot targetSlot = targetItem.GetComponentInParent<Slot>();
                 var nextItemData = ItemManager.Instance.TryMerge(ItemData,targetSlot);
                 ItemManager.Instance.CreateItem(nextItemData, parentSlot, ItemState.Active); 
@@ -102,9 +102,9 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             {
                 if (targetItem.State == ItemState.Active)
                 {
-                    transform.SetParent(targetItem._currentSlot);
-                    ItemManager.Instance.SwapItems(_currentSlot, targetItem);
-                    _currentSlot = transform.parent;
+                    transform.SetParent(targetItem.currentSlot);
+                    ItemManager.Instance.SwapItems(currentSlot, targetItem);
+                    currentSlot = transform.parent;
                     _rectTransform.anchoredPosition = Vector2.zero;
                 }
                 else
@@ -124,7 +124,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     private void ReturnToSlot()
     {
-        transform.SetParent(_currentSlot);
+        transform.SetParent(currentSlot);
         _rectTransform.anchoredPosition = Vector2.zero;
     }
     

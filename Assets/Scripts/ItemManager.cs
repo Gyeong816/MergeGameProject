@@ -16,6 +16,7 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private Item itemPrefab;
     [SerializeField] private float itemMoveSpeed = 0.2f;
     [SerializeField] private SlotManager slotManager;
+    [SerializeField] private GameObject bonusItem;
     
     private List<ItemData> _allItems = new();
     private Dictionary<string, Sprite> _iconDict = new();
@@ -50,6 +51,7 @@ public class ItemManager : MonoBehaviour
         
         OnItemsLoaded?.Invoke();
     }
+    
 
     public Item CreateItem(ItemData data, Transform parent, ItemState state)
     {
@@ -65,6 +67,29 @@ public class ItemManager : MonoBehaviour
         newItem.SetItemState(state);
         
         return newItem;
+    }
+
+    public void CreateRandomItem(Slot orignalSlot)
+    {
+        Slot emptySlot = slotManager.GetEmptySlot(orignalSlot.gridX, orignalSlot.gridY);
+        if (emptySlot == null)
+            return;
+        int randomChance = UnityEngine.Random.Range(0, 10);
+        
+        int targetTier = 1;
+
+        if (randomChance < 6)          // 60%
+            targetTier = 1;
+        else if (randomChance < 9)     // 30%
+            targetTier = 2;
+        else                           // 10%
+            targetTier = 3;
+    
+        var candidates = _allItems.FindAll(i => i.Tier == targetTier);
+
+        ItemData randomData = candidates[UnityEngine.Random.Range(0, candidates.Count)];
+        Item randomItem = CreateItem(randomData, orignalSlot.transform, ItemState.Active);
+        StartCoroutine(MoveToSlot(randomItem, emptySlot.transform));
     }
     
     public List<ItemData> GetItemsByTierRange(int minTier, int maxTier)
@@ -88,12 +113,12 @@ public class ItemManager : MonoBehaviour
         }
         return maxTier;
     }
-
+    
     public void SwapItems(Transform slotA, Item itemB)
     {
         StartCoroutine(MoveToSlot(itemB, slotA));
     }
-
+    
     private IEnumerator MoveToSlot(Item itemB, Transform targetSlot)
     {
         RectTransform itemRect = itemB.GetComponent<RectTransform>();
@@ -113,5 +138,5 @@ public class ItemManager : MonoBehaviour
         itemRect.anchoredPosition = end;
         
     }
-
-}
+    
+ }

@@ -15,12 +15,14 @@ public class SlotManager : MonoBehaviour
     [SerializeField] private Transform gridPanel;
     [SerializeField] private Item itemPrefab;
     
-    [Header("가장자리 아이템 티어 설정 ")]
+    [Header("가장자리 아이템 티어 설정")]
     [SerializeField] private int highTierRows = 2;
     [SerializeField] private int highTierColumns = 1;
-
     [SerializeField] private int middleTierRows = 2;
     [SerializeField] private int middleTierColumns = 1;
+    
+    [Header("아이템 스포너")]
+    [SerializeField] ItemSpawner itemSpawner;
     
     private Slot[,] _slots;
     private List<ItemData> _allItems = new();
@@ -34,7 +36,7 @@ public class SlotManager : MonoBehaviour
 
     private void Awake()
     {
-        _slots = new Slot[rows, columns];
+        _slots = new Slot[columns, rows];
         CreateSlots();
     }
 
@@ -71,13 +73,15 @@ public class SlotManager : MonoBehaviour
                     newSlot.slotType = SlotType.LowTier;
                 
                 
-                _slots[y, x] = newSlot;
+                _slots[x, y] = newSlot;
             }
         }
     }
 
     private void SpawnItems()
     {
+        List<Slot> lowTierSlots = new List<Slot>();
+        
         foreach (var slot in _slots)
         {
             var range = _tierRanges[slot.slotType];
@@ -95,11 +99,18 @@ public class SlotManager : MonoBehaviour
                     ItemManager.Instance.CreateItem(randomItemData, slot.transform, ItemState.Disabled);
                     break;
                 case SlotType.LowTier:
+                    lowTierSlots.Add(slot);
                     ItemManager.Instance.CreateItem(randomItemData, slot.transform, ItemState.Active);
                     break;
             }
-            
         }
+        
+       
+        Slot target = lowTierSlots[UnityEngine.Random.Range(0, lowTierSlots.Count)];
+        Item existingItem = target.GetComponentInChildren<Item>();
+        Destroy(existingItem.gameObject);
+        
+        Instantiate(itemSpawner, target.transform);
     }
 
     public void UnlockHiddenItems(Slot slot)
@@ -115,15 +126,38 @@ public class SlotManager : MonoBehaviour
 
     private void UnlockItem(int gridX, int gridY)
     {
-        if (gridX < 0 || gridX >= _slots.GetLength(1) ||
-            gridY < 0 || gridY >= _slots.GetLength(0))
+        if (gridX < 0 || gridX >= _slots.GetLength(0) ||
+            gridY < 0 || gridY >= _slots.GetLength(1))
             return;
         
-        Slot targetSlot = _slots[gridY, gridX];
+        Slot targetSlot = _slots[gridX, gridY];
         Item item = targetSlot.GetComponentInChildren<Item>();
         
         if (item != null && item.State == ItemState.Hidden)
             item.SetItemState(ItemState.Disabled);
     }
-   
+
+    public Slot GetEmptySlot(int originX, int originY)
+    {
+        Slot nearestSlot = null;
+        float nearestDist = float.MaxValue;
+        
+        foreach (var slot in _slots)
+        {
+            if (slot.transform.childCount == 0)
+            {
+                int disX = slot.gridX - originX;
+                int disY = slot.gridY - originY;
+                
+                float dist = disX * disX + disY * disY;
+
+                if (dist < nearestDist)
+                {
+                    nearestDist = dist;
+                    nearestSlot = slot;
+                }
+            }
+        }
+        return nearestSlot;
+    }
 }
