@@ -74,13 +74,13 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         if (_state != ItemState.Active) return;
         
-        if (eventData.pointerEnter.GetComponent<Slot>())
+        if (eventData.pointerEnter != null && eventData.pointerEnter.GetComponent<Slot>())
         {
             Slot targetSlot = eventData.pointerEnter.GetComponent<Slot>();
             transform.SetParent(targetSlot.transform);
             _rectTransform.anchoredPosition = Vector2.zero; 
         }
-        else if (eventData.pointerEnter.GetComponent<Item>())
+        else if (eventData.pointerEnter != null && eventData.pointerEnter.GetComponent<Item>())
         {
             Item targetItem = eventData.pointerEnter.GetComponent<Item>();
             int maxTier = ItemManager.Instance.GetMaxTierNum(targetItem.ItemData.ItemType);
