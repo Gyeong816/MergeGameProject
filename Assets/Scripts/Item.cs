@@ -115,7 +115,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         }
         else
         {
-            ReturnToSlot();
+            ReturnToSlot(); 
         }
         
         _canvasGroup.blocksRaycasts = true;
