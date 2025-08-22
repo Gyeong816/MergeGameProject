@@ -310,7 +310,7 @@ MonoBehaviour:
   gridPanel: {fileID: 522777751}
   itemPrefab: {fileID: 2501730446593099403, guid: 1ddeeb361fdc93347b02fcc56e880d6a,
     type: 3}
-  highTierRows: 1
+  highTierRows: 2
   highTierColumns: 1
   middleTierRows: 2
   middleTierColumns: 1
@@ -572,6 +572,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 2501730446593099403, guid: 1ddeeb361fdc93347b02fcc56e880d6a,
     type: 3}
+  itemMoveSpeed: 0.2
 --- !u!4 &875049553
 Transform:
   m_ObjectHideFlags: 0

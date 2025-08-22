@@ -13,3 +13,10 @@ public enum ItemType
     Vegetable,
     None
 }
+
+public enum ItemState
+{
+    Hidden,    
+    Disabled,   
+    Active  
+}

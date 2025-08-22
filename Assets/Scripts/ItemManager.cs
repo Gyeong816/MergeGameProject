@@ -50,21 +50,19 @@ public class ItemManager : MonoBehaviour
         OnItemsLoaded?.Invoke();
     }
 
-    public Item CreateItem(ItemData data, Transform parent)
+    public Item CreateItem(ItemData data, Transform parent, ItemState state)
     {
         Item newItem = Instantiate(itemPrefab, parent);
         newItem.ItemData = data;
         newItem.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
         
         if (_iconDict.TryGetValue(data.Icon, out var sprite))
-        {
             newItem.GetComponent<Image>().sprite = sprite;
-        }
         else
-        {
             Debug.LogWarning($"{data.Icon} 없음");
-        }
-        
+
+        newItem.SetItemState(state);
+
         return newItem;
     }
     
@@ -97,8 +95,7 @@ public class ItemManager : MonoBehaviour
     private IEnumerator MoveToSlot(Item itemB, Transform targetSlot)
     {
         RectTransform itemRect = itemB.GetComponent<RectTransform>();
-        itemB.transform.SetParent(targetSlot);
-        itemB.currentSlot = targetSlot;
+        itemB.SetSlot(targetSlot);
         
         Vector2 start = itemRect.anchoredPosition;
         Vector2 end = Vector2.zero;

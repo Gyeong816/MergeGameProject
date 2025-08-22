@@ -85,8 +85,21 @@ public class SlotManager : MonoBehaviour
             if (candidateItems.Count == 0) continue;
             
             ItemData randomItemData = candidateItems[UnityEngine.Random.Range(0, candidateItems.Count)];
-            ItemManager.Instance.CreateItem(randomItemData, slot.transform);
-
+            
+            switch (slot.slotType)
+            {
+                case SlotType.HighTier:
+                    ItemManager.Instance.CreateItem(randomItemData, slot.transform, ItemState.Hidden);
+                    break;
+                case SlotType.MiddleTier:
+                    ItemManager.Instance.CreateItem(randomItemData, slot.transform, ItemState.Disabled);
+                    break;
+                case SlotType.LowTier:
+                    ItemManager.Instance.CreateItem(randomItemData, slot.transform, ItemState.Active);
+                    break;
+            }
+          
+            
         }
     }
    
