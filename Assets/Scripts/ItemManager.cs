@@ -15,6 +15,7 @@ public class ItemManager : MonoBehaviour
     
     [SerializeField] private Item itemPrefab;
     [SerializeField] private float itemMoveSpeed = 0.2f;
+    [SerializeField] private SlotManager slotManager;
     
     private List<ItemData> _allItems = new();
     private Dictionary<string, Sprite> _iconDict = new();
@@ -62,7 +63,7 @@ public class ItemManager : MonoBehaviour
             Debug.LogWarning($"{data.Icon} 없음");
 
         newItem.SetItemState(state);
-
+        
         return newItem;
     }
     
@@ -71,9 +72,10 @@ public class ItemManager : MonoBehaviour
         return _allItems.FindAll(i => i.Tier >= minTier && i.Tier <= maxTier);
     }
 
-    public ItemData TryMerge(ItemData itemdata)
+    public ItemData TryMerge(ItemData itemData, Slot slot)
     {
-        return _allItems.Find(i => i.ItemType == itemdata.ItemType && i.Tier == itemdata.Tier + 1);
+        slotManager.UnlockHiddenItems(slot);
+        return _allItems.Find(i => i.ItemType == itemData.ItemType && i.Tier == itemData.Tier + 1);
     }
 
     public int GetMaxTierNum(ItemType type)

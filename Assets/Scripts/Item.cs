@@ -89,7 +89,8 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             if (targetItem.ItemData.Id == ItemData.Id && targetItem.ItemData.Tier < maxTier)
             {
                 Transform parentSlot = targetItem._currentSlot;
-                var nextItemData = ItemManager.Instance.TryMerge(ItemData);
+                Slot targetSlot = targetItem.GetComponentInParent<Slot>();
+                var nextItemData = ItemManager.Instance.TryMerge(ItemData,targetSlot);
                 ItemManager.Instance.CreateItem(nextItemData, parentSlot, ItemState.Active); 
                 
                 targetItem.gameObject.SetActive(false);

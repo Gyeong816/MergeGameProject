@@ -98,9 +98,32 @@ public class SlotManager : MonoBehaviour
                     ItemManager.Instance.CreateItem(randomItemData, slot.transform, ItemState.Active);
                     break;
             }
-          
             
         }
+    }
+
+    public void UnlockHiddenItems(Slot slot)
+    {
+        int x = slot.gridX;
+        int y = slot.gridY;
+        
+        UnlockItem(x-1, y);
+        UnlockItem(x+1, y);
+        UnlockItem(x, y+1);
+        UnlockItem(x, y-1);
+    }
+
+    private void UnlockItem(int gridX, int gridY)
+    {
+        if (gridX < 0 || gridX >= _slots.GetLength(1) ||
+            gridY < 0 || gridY >= _slots.GetLength(0))
+            return;
+        
+        Slot targetSlot = _slots[gridY, gridX];
+        Item item = targetSlot.GetComponentInChildren<Item>();
+        
+        if (item != null && item.State == ItemState.Hidden)
+            item.SetItemState(ItemState.Disabled);
     }
    
 }
