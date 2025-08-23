@@ -42,9 +42,11 @@ public class SlotManager : MonoBehaviour
 
     private void Start()
     {
+        ItemManager.Instance.OnItemsLoaded -= SpawnItems;
         ItemManager.Instance.OnItemsLoaded += SpawnItems;
     }
 
+    
     private void CreateSlots()
     {
         for (int y = 0; y < rows; y++)

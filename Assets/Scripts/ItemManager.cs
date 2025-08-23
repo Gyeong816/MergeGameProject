@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -12,6 +13,7 @@ public class ItemManager : MonoBehaviour
 {
     public static ItemManager Instance { get; private set; }
     public event Action OnItemsLoaded;
+    public bool IsLoaded { get; private set; }
     
     [SerializeField] private Item itemPrefab;
     [SerializeField] private float itemMoveSpeed = 0.2f;
@@ -32,27 +34,47 @@ public class ItemManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
     
-    private async void Start()
+    private void Start()
     {
-        _allItems = await TsvLoader.LoadTableAsync<ItemData>("Items");
-        
-        foreach (var item in _allItems)
-        {
-            if (!_iconDict.ContainsKey(item.Icon))
-            {
-                var handle = Addressables.LoadAssetAsync<Sprite>(item.Icon);
-                await handle.Task;
-                if (handle.Status == AsyncOperationStatus.Succeeded)
-                {
-                    _iconDict[item.Icon] = handle.Result;
-                }
-            }
-        }
-        
-        OnItemsLoaded?.Invoke();
+        _ = LoadItemDataAsync();
     }
     
+    private async Task LoadItemDataAsync()
+    {
+        try
+        {
+            _allItems = await TsvLoader.LoadTableAsync<ItemData>("Items");
 
+            foreach (var item in _allItems)
+            {
+                if (!_iconDict.ContainsKey(item.Icon))
+                {
+                    var handle = Addressables.LoadAssetAsync<Sprite>(item.Icon);
+                    await handle.Task;
+                    if (handle.Status == AsyncOperationStatus.Succeeded)
+                    {
+                        _iconDict[item.Icon] = handle.Result;
+                    }
+                }
+            }
+            IsLoaded = true;
+            OnItemsLoaded?.Invoke();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"[LoadItemDataAsync] 로드 중 에러: {ex}");
+        }
+    }
+
+    public Sprite GetIcon(string key)
+    {
+        if (_iconDict.TryGetValue(key, out var sprite))
+            return sprite;
+
+        Debug.LogWarning($"{key} 없음");
+        return null;
+    }
+    
     public Item CreateItem(ItemData data, Transform parent, ItemState state)
     {
         Item newItem = Instantiate(itemPrefab, parent);
