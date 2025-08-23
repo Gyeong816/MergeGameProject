@@ -13,11 +13,14 @@ public class MissionManager : MonoBehaviour
     private List<MissionData> _allMissionDatas = new();
     private Dictionary<string, Sprite> _iconCache = new();
     private int _currentIndex = 0; 
+    private List<MissionBox> _activeMissionBoxes = new();
 
     private void Start()
     {
         ItemManager.Instance.OnItemsLoaded -= HandleItemsLoaded;
         ItemManager.Instance.OnItemsLoaded += HandleItemsLoaded;
+        ItemManager.Instance.OnItemMerged -= HandleItemMerged;
+        ItemManager.Instance.OnItemMerged += HandleItemMerged;
     }
     
     private void HandleItemsLoaded()
@@ -38,7 +41,11 @@ public class MissionManager : MonoBehaviour
         }
     }
 
-
+    private void HandleItemMerged()
+    {
+        foreach (var box in _activeMissionBoxes)
+            box.CheckProgress();
+    }
     private void CreateMissions()
     {
         for (int i = 0; i < missionCount; i++)
@@ -50,9 +57,24 @@ public class MissionManager : MonoBehaviour
             _currentIndex++;
             
             MissionBox box = Instantiate(missionBox, missionPanel);
-            box.SetData(data);
+            box.SetData(data,this);
+            _activeMissionBoxes.Add(box);
         }
     }
-    
+
+    public void RemoveMission(MissionBox box)
+    {
+        _activeMissionBoxes.Remove(box);
+        CreateNewMission();
+    }
+
+    private void CreateNewMission()
+    {
+        MissionData data = _allMissionDatas[_currentIndex];
+        _currentIndex++;
+        MissionBox newbox = Instantiate(missionBox, missionPanel);
+        newbox.SetData(data,this);
+        _activeMissionBoxes.Add(newbox);
+    }
     
 }

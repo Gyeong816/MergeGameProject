@@ -13,6 +13,7 @@ public class ItemManager : MonoBehaviour
 {
     public static ItemManager Instance { get; private set; }
     public event Action OnItemsLoaded;
+    public event Action OnItemMerged;
     public bool IsLoaded { get; private set; }
     
     [SerializeField] private Item itemPrefab;
@@ -21,6 +22,7 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private GameObject bonusItem;
     
     private List<ItemData> _allItems = new();
+    private List<ItemData> _activeItems = new();
     private Dictionary<string, Sprite> _iconDict = new();
     
     private void Awake()
@@ -88,9 +90,36 @@ public class ItemManager : MonoBehaviour
 
         newItem.SetItemState(state);
         
+        if (state == ItemState.Active)
+            _activeItems.Add(data);
+        
         return newItem;
     }
 
+    public List<string> GetActiveItemsNames()
+    {
+        List<string> activeItemName = new();
+        foreach (var item in _activeItems)
+        {
+            activeItemName.Add(item.Name);
+        }
+     
+        return activeItemName;
+    }
+
+    public void RemoveItem(string itemName)
+    {
+        for (int i = 0; i < _activeItems.Count; i++)
+        {
+            if (_activeItems[i].Name == itemName)
+            {
+                _activeItems.RemoveAt(i);
+                return;
+            }
+        }
+        Debug.LogWarning($"{itemName}을 찾지 못했습니다.");
+    }
+    
     public void CreateRandomItem(Slot orignalSlot)
     {
         Slot emptySlot = slotManager.GetEmptySlot(orignalSlot.gridX, orignalSlot.gridY);
@@ -119,10 +148,14 @@ public class ItemManager : MonoBehaviour
         return _allItems.FindAll(i => i.Tier >= minTier && i.Tier <= maxTier);
     }
 
-    public ItemData TryMerge(ItemData itemData, Slot slot)
+
+    public void Merge(ItemData itemData, Slot slot, Transform parent)
     {
         slotManager.UnlockHiddenItems(slot);
-        return _allItems.Find(i => i.ItemType == itemData.ItemType && i.Tier == itemData.Tier + 1);
+        ItemData data = _allItems.Find(i => i.ItemType == itemData.ItemType && i.Tier == itemData.Tier + 1);
+    
+        CreateItem(data, parent, ItemState.Active);
+        OnItemMerged?.Invoke();  
     }
 
     public int GetMaxTierNum(ItemType type)

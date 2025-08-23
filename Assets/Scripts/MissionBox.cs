@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -11,35 +12,60 @@ public class MissionBox : MonoBehaviour
   [SerializeField] Image missionIconPrefab;
   [SerializeField] private Transform iconPanel;
   [SerializeField] private TextMeshProUGUI missionText;
+  [SerializeField] private Button claimButton;
 
-  
-  public void SetData(MissionData data)
+  private MissionManager missionManager;
+  private bool required1Done = false;
+  private bool required2Done = false;
+
+  private void Awake()
   {
-    
-    MissionData = data;
+    claimButton.onClick.AddListener(OnButtonClicked);
+  }
 
+  public void SetData(MissionData data, MissionManager manager)
+  {
+
+    missionManager = manager;
+    MissionData = data;
     missionText.text = "+" + data.RewardGold.ToString();
     
-    if (data.RequiredItem1 != "null")
-    {
-      var sprite = ItemManager.Instance.GetIcon(data.RequiredItem1);
-      if (sprite != null)
-      {
-        var img = Instantiate(missionIconPrefab, iconPanel);
-        img.sprite = sprite;
-        img.gameObject.SetActive(true);
-      }
-    }
+    var icon1 = Instantiate(missionIconPrefab, iconPanel);
+    icon1.sprite = ItemManager.Instance.GetIcon(data.RequiredItem1);
+    required1Done = false;
+    required2Done = true;
 
     if (data.RequiredItem2 != "null")
     {
-      var sprite = ItemManager.Instance.GetIcon(data.RequiredItem2);
-      if (sprite != null)
-      {
-        var img = Instantiate(missionIconPrefab, iconPanel);
-        img.sprite = sprite;
-        img.gameObject.SetActive(true);
-      }
+      var icon2 = Instantiate(missionIconPrefab, iconPanel);
+      icon2.sprite = ItemManager.Instance.GetIcon(data.RequiredItem1);
+      required2Done = false;
     }
+  }
+  
+  public void CheckProgress()
+  {
+    List<string> currentItemsNames = ItemManager.Instance.GetActiveItemsNames();
+
+    foreach (var name in currentItemsNames)
+    {
+      if (MissionData.RequiredItem1 == name)
+        required1Done = true;
+    
+      if(MissionData.RequiredItem2 == name)
+        required2Done = true;
+    }
+
+    if (required1Done && required2Done)
+    {
+      
+      claimButton.gameObject.SetActive(true);
+    }
+  }
+
+  private void OnButtonClicked()
+  {
+    missionManager.RemoveMission(this);
+    Destroy(gameObject);
   }
 }

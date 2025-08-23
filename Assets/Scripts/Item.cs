@@ -90,13 +90,13 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             {
                 Transform parentSlot = targetItem.currentSlot;
                 Slot targetSlot = targetItem.GetComponentInParent<Slot>();
-                var nextItemData = ItemManager.Instance.TryMerge(ItemData,targetSlot);
-                ItemManager.Instance.CreateItem(nextItemData, parentSlot, ItemState.Active); 
+                ItemManager.Instance.Merge(ItemData, targetSlot,parentSlot);
                 
                 targetItem.gameObject.SetActive(false);
                 gameObject.SetActive(false);
                 Destroy(targetItem.gameObject);
                 Destroy(gameObject);
+                
             }
             else
             {
