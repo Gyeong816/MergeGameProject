@@ -152,6 +152,17 @@ public class ItemManager : MonoBehaviour
         Item randomItem = CreateItem(randomData, orignalSlot.transform, ItemState.Active);
         StartCoroutine(MoveToSlot(randomItem, emptySlot.transform));
     }
+
+    public bool hasEmptySlot(Slot orignalSlot)
+    {
+        Slot emptySlot = slotManager.GetEmptySlot(orignalSlot.gridX, orignalSlot.gridY);
+        if (emptySlot == null)
+            return false;
+        else
+         return true;
+    }
+    
+    
     
     public List<ItemData> GetItemsByTierRange(int minTier, int maxTier)
     {

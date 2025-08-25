@@ -28,8 +28,16 @@ public class ItemProduceBasket: MonoBehaviour, IBeginDragHandler, IDragHandler, 
     public void OnPointerClick(PointerEventData eventData)
     {
         Slot parentSlot = GetComponentInParent<Slot>();
-        ItemManager.Instance.CreateRandomItem(parentSlot);
-        _basketEnergy.UseEnergy();
+        
+        if(ItemManager.Instance.hasEmptySlot(parentSlot)&&_basketEnergy.CanUseEnergy())
+        {
+            _basketEnergy.UseEnergy();
+            ItemManager.Instance.CreateRandomItem(parentSlot);
+        }
+        else
+        {
+            Debug.Log("슬롯 없음 or 에너지 부족");
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
