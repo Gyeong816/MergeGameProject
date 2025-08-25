@@ -13,7 +13,7 @@ public class ItemManager : MonoBehaviour
 {
     public static ItemManager Instance { get; private set; }
     public event Action OnItemsLoaded;
-    public event Action OnItemMerged;
+    public event Action OnItemsChanged;
     public bool IsLoaded { get; private set; }
     
     [SerializeField] private Item itemPrefab;
@@ -33,7 +33,6 @@ public class ItemManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
     
     private void Start()
@@ -93,6 +92,8 @@ public class ItemManager : MonoBehaviour
         if (state == ItemState.Active)
             _activeItems.Add(data);
         
+        OnItemsChanged?.Invoke(); 
+        
         return newItem;
     }
 
@@ -107,17 +108,26 @@ public class ItemManager : MonoBehaviour
         return activeItemName;
     }
 
-    public void RemoveItem(string itemName)
+    public void ConsumeItem(string itemName)
     {
-        for (int i = 0; i < _activeItems.Count; i++)
+        ItemData target = _activeItems.Find(i => i.Name == itemName);
+        if (target != null)
         {
-            if (_activeItems[i].Name == itemName)
+            _activeItems.Remove(target);
+        }
+        
+        foreach (var slot in slotManager.AllSlots)
+        {
+            Item item = slot.GetComponentInChildren<Item>();
+            if (item != null && 
+                item.State == ItemState.Active && 
+                item.ItemData.Name == itemName)
             {
-                _activeItems.RemoveAt(i);
-                return;
+                Destroy(item.gameObject);
+                break; 
             }
         }
-        Debug.LogWarning($"{itemName}을 찾지 못했습니다.");
+        OnItemsChanged?.Invoke(); 
     }
     
     public void CreateRandomItem(Slot orignalSlot)
@@ -149,13 +159,23 @@ public class ItemManager : MonoBehaviour
     }
 
 
-    public void Merge(ItemData itemData, Slot slot, Transform parent)
+    public void Merge(Item itemA, Item itemB, Slot slot, Transform parent)
     {
         slotManager.UnlockHiddenItems(slot);
-        ItemData data = _allItems.Find(i => i.ItemType == itemData.ItemType && i.Tier == itemData.Tier + 1);
-    
+
+        ItemData data = _allItems.Find(i => i.ItemType == itemA.ItemData.ItemType 
+                                            && i.Tier == itemA.ItemData.Tier + 1);
         CreateItem(data, parent, ItemState.Active);
-        OnItemMerged?.Invoke();  
+
+        if (itemA.State == ItemState.Active)
+            _activeItems.Remove(itemA.ItemData);
+        if (itemB.State == ItemState.Active)
+            _activeItems.Remove(itemB.ItemData);
+
+        Destroy(itemA.gameObject);
+        Destroy(itemB.gameObject);
+
+        OnItemsChanged?.Invoke(); 
     }
 
     public int GetMaxTierNum(ItemType type)

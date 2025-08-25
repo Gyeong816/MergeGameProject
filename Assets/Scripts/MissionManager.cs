@@ -9,6 +9,7 @@ public class MissionManager : MonoBehaviour
     [SerializeField] private int missionCount = 2;
     [SerializeField] private MissionBox missionBox;
     [SerializeField] private Transform missionPanel;
+    [SerializeField] private ItemManager itemManager;
     
     private List<MissionData> _allMissionDatas = new();
     private Dictionary<string, Sprite> _iconCache = new();
@@ -17,10 +18,8 @@ public class MissionManager : MonoBehaviour
 
     private void Start()
     {
-        ItemManager.Instance.OnItemsLoaded -= HandleItemsLoaded;
         ItemManager.Instance.OnItemsLoaded += HandleItemsLoaded;
-        ItemManager.Instance.OnItemMerged -= HandleItemMerged;
-        ItemManager.Instance.OnItemMerged += HandleItemMerged;
+        ItemManager.Instance.OnItemsChanged += HandleItemsChanged; 
     }
     
     private void HandleItemsLoaded()
@@ -41,7 +40,7 @@ public class MissionManager : MonoBehaviour
         }
     }
 
-    private void HandleItemMerged()
+    private void HandleItemsChanged()
     {
         foreach (var box in _activeMissionBoxes)
             box.CheckProgress();

@@ -17,6 +17,7 @@ public class MissionBox : MonoBehaviour
   private MissionManager missionManager;
   private bool required1Done = false;
   private bool required2Done = false;
+  private bool hasTowItems;
 
   private void Awake()
   {
@@ -33,38 +34,45 @@ public class MissionBox : MonoBehaviour
     var icon1 = Instantiate(missionIconPrefab, iconPanel);
     icon1.sprite = ItemManager.Instance.GetIcon(data.RequiredItem1);
     required1Done = false;
-    required2Done = true;
 
     if (data.RequiredItem2 != "null")
     {
       var icon2 = Instantiate(missionIconPrefab, iconPanel);
-      icon2.sprite = ItemManager.Instance.GetIcon(data.RequiredItem1);
+      icon2.sprite = ItemManager.Instance.GetIcon(data.RequiredItem2);
       required2Done = false;
+      hasTowItems = true;
+    }
+    else
+    {
+      required2Done = true;
+      hasTowItems = false;
     }
   }
   
   public void CheckProgress()
   {
     List<string> currentItemsNames = ItemManager.Instance.GetActiveItemsNames();
+    
+    required1Done = false;
+    required2Done = !hasTowItems; 
 
     foreach (var name in currentItemsNames)
     {
       if (MissionData.RequiredItem1 == name)
         required1Done = true;
-    
-      if(MissionData.RequiredItem2 == name)
+
+      if (hasTowItems && MissionData.RequiredItem2 == name)
         required2Done = true;
     }
 
-    if (required1Done && required2Done)
-    {
-      
-      claimButton.gameObject.SetActive(true);
-    }
+    claimButton.gameObject.SetActive(required1Done && required2Done);
   }
 
   private void OnButtonClicked()
   {
+    ItemManager.Instance.ConsumeItem(MissionData.RequiredItem1);
+    if (hasTowItems)
+      ItemManager.Instance.ConsumeItem(MissionData.RequiredItem2);
     missionManager.RemoveMission(this);
     Destroy(gameObject);
   }

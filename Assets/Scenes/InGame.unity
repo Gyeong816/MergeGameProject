@@ -743,6 +743,7 @@ MonoBehaviour:
   missionBox: {fileID: 3150823299723804882, guid: da29243be1b51154aace957c6290d5b8,
     type: 3}
   missionPanel: {fileID: 1232216822}
+  itemManager: {fileID: 875049552}
 --- !u!1 &1232216821
 GameObject:
   m_ObjectHideFlags: 0

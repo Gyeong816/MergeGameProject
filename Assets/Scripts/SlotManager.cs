@@ -27,6 +27,15 @@ public class SlotManager : MonoBehaviour
     private Slot[,] _slots;
     private List<ItemData> _allItems = new();
     
+    public IEnumerable<Slot> AllSlots
+    {
+        get
+        {
+            foreach (var slot in _slots)
+                yield return slot;
+        }
+    }
+    
     private readonly Dictionary<SlotType, (int minTier, int maxTier)> _tierRanges = new()
     {
         { SlotType.HighTier, (5,6)},
@@ -42,7 +51,6 @@ public class SlotManager : MonoBehaviour
 
     private void Start()
     {
-        ItemManager.Instance.OnItemsLoaded -= SpawnItems;
         ItemManager.Instance.OnItemsLoaded += SpawnItems;
     }
 
