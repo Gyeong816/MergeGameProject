@@ -7,22 +7,22 @@ using UnityEngine;
 public class PlayerCoin : MonoBehaviour
 {
    [SerializeField] private TextMeshProUGUI coinText;
-   private int _coinAmount;
+   [SerializeField] private int coinAmount;
 
    private void Awake()
    {
-      coinText.text = _coinAmount.ToString();
+      coinText.text = coinAmount.ToString();
    }
 
    public void AddCoin(int amount)
    {
-      _coinAmount += amount;
-      coinText.text = _coinAmount.ToString();
+      coinAmount += amount;
+      coinText.text = coinAmount.ToString();
    }
 
    public void SubtractCoin(int amount)
    {
-      _coinAmount -= amount;
-      coinText.text = _coinAmount.ToString();
+      coinAmount -= amount;
+      coinText.text = coinAmount.ToString();
    }
 }

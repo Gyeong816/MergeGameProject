@@ -21,8 +21,9 @@ public class SlotManager : MonoBehaviour
     [SerializeField] private int middleTierRows = 2;
     [SerializeField] private int middleTierColumns = 1;
     
-    [Header("아이템 스포너")]
-    [SerializeField] ItemSpawner itemSpawner;
+    [Header("아이템 바구니")]
+    [SerializeField] ItemProduceBasket itemProduceBasket;
+    [SerializeField] BasketEnergy basketEnergy;
     
     private Slot[,] _slots;
     private List<ItemData> _allItems = new();
@@ -120,7 +121,8 @@ public class SlotManager : MonoBehaviour
         Item existingItem = target.GetComponentInChildren<Item>();
         Destroy(existingItem.gameObject);
         
-        Instantiate(itemSpawner, target.transform);
+        ItemProduceBasket newBasket = Instantiate(itemProduceBasket, target.transform);
+        newBasket.Init(basketEnergy);
     }
 
     public void UnlockHiddenItems(Slot slot)

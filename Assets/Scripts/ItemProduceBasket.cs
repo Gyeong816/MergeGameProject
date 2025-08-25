@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ItemSpawner : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
+public class ItemProduceBasket: MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
+    public Transform currentSlot;
+    
     private Canvas _canvas;
     private RectTransform _rectTransform;
     private CanvasGroup _canvasGroup;
-    public Transform currentSlot;
+    private BasketEnergy _basketEnergy;
     
     private void Awake()
     {
@@ -17,11 +19,17 @@ public class ItemSpawner : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         _canvasGroup = GetComponent<CanvasGroup>();
         currentSlot = transform.parent;
     }
+
+    public void Init(BasketEnergy basketEnergy)
+    {
+        _basketEnergy = basketEnergy;
+    }
     
     public void OnPointerClick(PointerEventData eventData)
     {
         Slot parentSlot = GetComponentInParent<Slot>();
         ItemManager.Instance.CreateRandomItem(parentSlot);
+        _basketEnergy.UseEnergy();
     }
 
     public void OnBeginDrag(PointerEventData eventData)

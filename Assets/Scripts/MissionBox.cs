@@ -13,20 +13,17 @@ public class MissionBox : MonoBehaviour
   [SerializeField] private Transform iconPanel;
   [SerializeField] private TextMeshProUGUI missionText;
   [SerializeField] private Button claimButton;
+  [SerializeField] private GameObject claimImage;
 
   private MissionManager missionManager;
   private bool required1Done = false;
   private bool required2Done = false;
   private bool hasTowItems;
-
-  private void Awake()
-  {
-    claimButton.onClick.AddListener(OnButtonClicked);
-  }
+  
 
   public void SetData(MissionData data, MissionManager manager)
   {
-
+    claimButton.onClick.AddListener(OnButtonClicked);
     missionManager = manager;
     MissionData = data;
     missionText.text = "+" + data.RewardGold.ToString();
@@ -66,6 +63,7 @@ public class MissionBox : MonoBehaviour
     }
 
     claimButton.gameObject.SetActive(required1Done && required2Done);
+    claimImage.SetActive(required1Done && required2Done);
   }
 
   private void OnButtonClicked()

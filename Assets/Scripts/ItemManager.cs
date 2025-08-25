@@ -19,7 +19,7 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private Item itemPrefab;
     [SerializeField] private float itemMoveSpeed = 0.2f;
     [SerializeField] private SlotManager slotManager;
-    [SerializeField] private GameObject bonusItem;
+
     
     private List<ItemData> _allItems = new();
     private List<ItemData> _activeItems = new();
