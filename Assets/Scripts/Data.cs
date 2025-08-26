@@ -14,7 +14,7 @@ public class ItemData
 public class PlayerData
 {
     public int gold = 0;
-    public int stamina = 10;
+    public int stamina = 0;
     public List<SlotData> slots = new();
 }
 

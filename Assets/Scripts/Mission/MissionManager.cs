@@ -64,7 +64,11 @@ public class MissionManager : MonoBehaviour
 
     public void RemoveMission(MissionBox box)
     {
-        playerCoin.AddCoin(box.MissionData.RewardGold);
+        //playerCoin.AddCoin(box.MissionData.RewardGold);
+        
+        if(GameManager.Instance != null)
+            GameManager.Instance.AddGold(box.MissionData.RewardGold);
+            
         _activeMissionBoxes.Remove(box);
         CreateNewMission();
     }

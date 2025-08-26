@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LobbyUIManager : MonoBehaviour
+public class InGameUIManager : MonoBehaviour
 {
     [Header("버튼")]
     [SerializeField] private Button inGameButton;
@@ -38,6 +37,6 @@ public class LobbyUIManager : MonoBehaviour
 
     private void StartGame()
     {
-        SceneManager.LoadScene("InGame");
+        SceneManager.LoadScene("Lobby");
     }
 }

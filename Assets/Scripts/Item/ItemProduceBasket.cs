@@ -31,7 +31,11 @@ public class ItemProduceBasket: MonoBehaviour, IBeginDragHandler, IDragHandler, 
         
         if(ItemManager.Instance.hasEmptySlot(parentSlot)&&_basketEnergy.CanUseEnergy())
         {
-            _basketEnergy.UseEnergy();
+           // _basketEnergy.UseEnergy();
+           
+            if(GameManager.Instance != null)
+               GameManager.Instance.UseStamina(5);
+           
             ItemManager.Instance.CreateRandomItem(parentSlot);
         }
         else
