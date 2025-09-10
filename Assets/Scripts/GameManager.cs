@@ -33,6 +33,20 @@ public class GameManager  : MonoBehaviour
       OnPlayerDataChanged?.Invoke();
    }
    
+   public bool TryUseStamina(int amount)
+   {
+      if (Player.stamina >= amount)
+      {
+         Player.stamina -= amount;
+         OnPlayerDataChanged?.Invoke();
+         return true; 
+      }
+      else
+      {
+         return false; 
+      }
+   }
+   
    public bool TryUnlockFurniture(int cost)
    {
       if (Player.gold >= cost)

@@ -10,7 +10,6 @@ public class MissionManager : MonoBehaviour
     [SerializeField] private MissionBox missionBox;
     [SerializeField] private Transform missionPanel;
     [SerializeField] private ItemManager itemManager;
-    [SerializeField] private PlayerCoin playerCoin;
     
     private List<MissionData> _allMissionDatas = new();
     private Dictionary<string, Sprite> _iconCache = new();
@@ -64,7 +63,6 @@ public class MissionManager : MonoBehaviour
 
     public void RemoveMission(MissionBox box)
     {
-        //playerCoin.AddCoin(box.MissionData.RewardGold);
         
         if(GameManager.Instance != null)
             GameManager.Instance.AddGold(box.MissionData.RewardGold);

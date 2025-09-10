@@ -29,18 +29,20 @@ public class ItemProduceBasket: MonoBehaviour, IBeginDragHandler, IDragHandler, 
     {
         Slot parentSlot = GetComponentInParent<Slot>();
         
-        if(ItemManager.Instance.hasEmptySlot(parentSlot)&&_basketEnergy.CanUseEnergy())
+        if(ItemManager.Instance.hasEmptySlot(parentSlot))
         {
-           // _basketEnergy.UseEnergy();
-           
-            if(GameManager.Instance != null)
-               GameManager.Instance.UseStamina(5);
-           
-            ItemManager.Instance.CreateRandomItem(parentSlot);
+            if (GameManager.Instance.TryUseStamina(5))
+            {
+                ItemManager.Instance.CreateRandomItem(parentSlot);
+            }
+            else
+            {
+                Debug.Log("해금 실패");
+            }
         }
         else
         {
-            Debug.Log("슬롯 없음 or 에너지 부족");
+            Debug.Log("슬롯 없음");
         }
     }
 
