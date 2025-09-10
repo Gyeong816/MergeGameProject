@@ -773,6 +773,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c65e8b69e51a3d64e9ab9aed058071cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  furnitureId: 4
+  unlockCost: 200
   coinImage: {fileID: 911538145}
 --- !u!1 &103577280
 GameObject:
@@ -863,6 +865,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c65e8b69e51a3d64e9ab9aed058071cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  furnitureId: 3
+  unlockCost: 200
   coinImage: {fileID: 1703856996}
 --- !u!1 &204457721
 GameObject:
@@ -1373,6 +1377,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b29d678b403bc40b572886f98a4f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxEnergy: 100
+  energyCost: 5
+  recoveryInterval: 5
 --- !u!4 &546190643
 Transform:
   m_ObjectHideFlags: 0
@@ -1649,6 +1656,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c65e8b69e51a3d64e9ab9aed058071cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  furnitureId: 1
+  unlockCost: 200
   coinImage: {fileID: 1577350443}
 --- !u!1 &894617560
 GameObject:
@@ -2074,6 +2083,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c65e8b69e51a3d64e9ab9aed058071cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  furnitureId: 5
+  unlockCost: 200
   coinImage: {fileID: 1564656315}
 --- !u!1 &1109650788
 GameObject:
@@ -2754,6 +2765,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c65e8b69e51a3d64e9ab9aed058071cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  furnitureId: 2
+  unlockCost: 200
   coinImage: {fileID: 297890995}
 --- !u!1 &1476147319
 GameObject:
@@ -3888,7 +3901,7 @@ GameObject:
   - component: {fileID: 1982247628}
   - component: {fileID: 1982247627}
   m_Layer: 5
-  m_Name: Image
+  m_Name: FurnitureItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

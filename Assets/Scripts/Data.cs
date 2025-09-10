@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 [System.Serializable]
 public class ItemData
@@ -13,8 +14,9 @@ public class ItemData
 [System.Serializable]
 public class PlayerData
 {
-    public int gold = 0;
-    public int stamina = 100;
+    public int gold = 0; 
+    public int energy = 100;
+    public List<int> unlockedFurnitureIds = new List<int>();
     public List<SlotData> slots = new();
 }
 

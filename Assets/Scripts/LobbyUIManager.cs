@@ -33,7 +33,7 @@ public class LobbyUIManager : MonoBehaviour
     private void UpdateUI()
     {
         coinText.text = GameManager.Instance.Player.gold.ToString();
-        energyText.text = GameManager.Instance.Player.stamina.ToString();
+        energyText.text = GameManager.Instance.Player.energy.ToString();
     }
 
     private void StartGame()

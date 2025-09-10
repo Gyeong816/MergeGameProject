@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class FurnitureUnlockUI : MonoBehaviour, IPointerClickHandler
 {
+    [SerializeField] private int furnitureId;  
     [SerializeField] private int unlockCost = 200;
     [SerializeField] private GameObject coinImage;
     private Image _image;
@@ -17,10 +18,19 @@ public class FurnitureUnlockUI : MonoBehaviour, IPointerClickHandler
         _image = GetComponent<Image>();
     }
     
+    private void Start()
+    {
+        if (GameManager.Instance.Player.unlockedFurnitureIds.Contains(furnitureId))
+        {
+            UnlockFurniture();
+        }
+    }
+    
     public void OnPointerClick(PointerEventData eventData)
     {
         if (GameManager.Instance.TryUnlockFurniture(unlockCost))
         {
+            GameManager.Instance.Player.unlockedFurnitureIds.Add(furnitureId);
             UnlockFurniture();
         }
         else
