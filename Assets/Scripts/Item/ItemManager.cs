@@ -178,6 +178,8 @@ public class ItemManager : MonoBehaviour
                                             && i.Tier == itemA.ItemData.Tier + 1);
         CreateItem(data, parent, ItemState.Active);
 
+        GameManager.Instance.UnlockItem(data.Id);
+        
         if (itemA.State == ItemState.Active)
             _activeItems.Remove(itemA.ItemData);
         if (itemB.State == ItemState.Active)

@@ -35,6 +35,15 @@ public class GameManager  : MonoBehaviour
     {
         HandleEnergyRecovery();
     }
+    public void UnlockItem(int itemId)
+    {
+        if (!Player.unlockedItemIds.Contains(itemId))
+        {
+            Player.unlockedItemIds.Add(itemId);
+            Debug.Log($"[도감] ID {itemId} 해금됨!");
+            OnPlayerDataChanged?.Invoke(); 
+        }
+    }
     
     public void AddGold(int amount)
     {

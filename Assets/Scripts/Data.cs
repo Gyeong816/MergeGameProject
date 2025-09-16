@@ -17,14 +17,6 @@ public class PlayerData
     public int gold = 0; 
     public int energy = 100;
     public List<int> unlockedFurnitureIds = new List<int>();
-    public List<SlotData> slots = new();
+    public List<int> unlockedItemIds = new List<int>();
 }
 
-[System.Serializable]
-public class SlotData
-{
-    public int slotIndex;
-    public string itemId;
-    public int itemLevel;
-    public bool isEmpty;
-}

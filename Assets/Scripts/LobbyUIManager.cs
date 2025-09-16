@@ -8,8 +8,13 @@ using UnityEngine.UI;
 
 public class LobbyUIManager : MonoBehaviour
 {
+    [Header("파넬")]
+    [SerializeField] private GameObject dictionaryPanel;
+    
     [Header("버튼")]
     [SerializeField] private Button inGameButton;
+    [SerializeField] private Button dictionaryButton;
+    [SerializeField] private Button closeDictionaryButton;
 
     [Header("Texts")]
     [SerializeField] private TextMeshProUGUI coinText;
@@ -19,6 +24,8 @@ public class LobbyUIManager : MonoBehaviour
     private void Awake()
     {
         inGameButton.onClick.AddListener(StartGame);
+        dictionaryButton.onClick.AddListener(() => dictionaryPanel.SetActive(true));
+        closeDictionaryButton.onClick.AddListener(() => dictionaryPanel.SetActive(false));
     }
     
     private void Update()
