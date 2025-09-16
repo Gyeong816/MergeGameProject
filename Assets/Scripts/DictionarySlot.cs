@@ -9,8 +9,7 @@ public class DictionarySlot : MonoBehaviour
     {
         if (iconSprite != null)
             icon.sprite = iconSprite;
-
-        // 해금 여부만 색상으로 표시
+        
         icon.color = isUnlocked ? Color.white : Color.black;
     }
 }
