@@ -14,10 +14,31 @@ public class LobbyUIManager : MonoBehaviour
     [Header("Texts")]
     [SerializeField] private TextMeshProUGUI coinText;
     [SerializeField] private TextMeshProUGUI energyText;
+    [SerializeField] private TextMeshProUGUI energyTimerText;
 
     private void Awake()
     {
         inGameButton.onClick.AddListener(StartGame);
+    }
+    
+    private void Update()
+    {
+        UpdateEnergyTimerUI();
+    }
+
+    private void UpdateEnergyTimerUI()
+    {
+        float remain = GameManager.Instance.GetRemainingRecoveryTime();
+    
+        if (GameManager.Instance.Player.energy >= GameManager.Instance.GetMaxEnergy())
+        {
+            energyTimerText.text = "FULL";
+        }
+        else
+        {
+            TimeSpan time = TimeSpan.FromSeconds(remain);
+            energyTimerText.text = $"{time.Seconds:D2}";
+        }
     }
     private void OnEnable()
     {

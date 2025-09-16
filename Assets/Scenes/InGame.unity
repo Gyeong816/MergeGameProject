@@ -169,6 +169,7 @@ MonoBehaviour:
   inGameButton: {fileID: 899414141}
   coinText: {fileID: 840122737}
   energyText: {fileID: 2015316723}
+  energyTimerText: {fileID: 1346956684}
 --- !u!1 &155274154
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,7 +187,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &155274155
 RectTransform:
   m_ObjectHideFlags: 0

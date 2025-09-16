@@ -20,6 +20,11 @@ public class MissionManager : MonoBehaviour
     {
         ItemManager.Instance.OnItemsLoaded += HandleItemsLoaded;
         ItemManager.Instance.OnItemsChanged += HandleItemsChanged; 
+        
+        if (ItemManager.Instance.IsLoaded)
+        {
+            _ = LoadMissionDataAsync();
+        }
     }
     
     private void HandleItemsLoaded()
@@ -31,6 +36,9 @@ public class MissionManager : MonoBehaviour
     {
         try
         {
+            _currentIndex = 0;
+            _activeMissionBoxes.Clear();
+            
             _allMissionDatas = await TsvLoader.LoadTableAsync<MissionData>("Missions");
             CreateMissions();
         }
@@ -78,6 +86,15 @@ public class MissionManager : MonoBehaviour
         MissionBox newbox = Instantiate(missionBox, missionPanel);
         newbox.SetData(data,this);
         _activeMissionBoxes.Add(newbox);
+    }
+    
+    private void OnDestroy()
+    {
+        if (ItemManager.Instance != null)
+        {
+            ItemManager.Instance.OnItemsLoaded -= HandleItemsLoaded;
+            ItemManager.Instance.OnItemsChanged -= HandleItemsChanged;
+        }
     }
     
 }

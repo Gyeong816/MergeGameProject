@@ -90,7 +90,11 @@ public class GameManager  : MonoBehaviour
         }
         return false;
     }
-    
+    public float GetRemainingRecoveryTime()
+    {
+        if (Player.energy >= maxEnergy) return 0f; // 이미 풀충전
+        return Mathf.Max(0, recoveryInterval - _energyTimer);
+    }
     public int GetMaxEnergy() => maxEnergy;
     public int GetEnergyCost() => energyCost;
 }
